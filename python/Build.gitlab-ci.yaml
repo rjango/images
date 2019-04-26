@@ -1,14 +1,12 @@
 build-cached-python:
   image: docker:latest
   stage: build
-#  only:
-#    - schedules
+  only:
+    - schedules
   services:
     - docker:dind
   variables:
     IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH/python
-    PYTHON_VERSION: "3.7.3"
-    ALPINE_VERSION: "3.9"
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - cd python
