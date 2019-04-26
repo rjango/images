@@ -1,0 +1,53 @@
+build-cached-python:
+  image: docker:latest
+  stage: build
+#  only:
+#    - schedules
+  services:
+    - docker:dind
+  variables:
+    IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH/cached/python
+    PYTHON_VERSION: "3.7.3"
+    ALPINE_VERSION: "3.9"
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - cd cached-images/python
+
+    - export IMAGE_TAG_VERSIONED_BASE=$PYTHON_VERSION-alpine$ALPINE_VERSION
+    - export IMAGE_VERSION=$IMAGE_BASE:$IMAGE_TAG_VERSIONED_BASE
+    - export IMAGE_LATEST=$IMAGE_BASE:latest
+    - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
+
+    - echo The full image being build is $IMAGE_LATEST
+    - echo The python version is being build with python version and alpine $IMAGE_TAG_BASE.
+    - echo $IMAGE_VERSION
+
+    - docker pull python:$IMAGE_TAG_BASE && echo "success" || echo "doesn't exist yet"
+    - docker pull $IMAGE_SHA && echo "success" || echo "doesn't exist yet"
+    - docker pull $IMAGE_LATEST && echo "success" || echo "doesn't exist yet"
+  script:
+    - echo building tags latest and $IMAGE_SHA
+    - >
+      docker build
+      --tag $IMAGE_LATEST
+      --tag $IMAGE_SHA
+      --tag $IMAGE_VERSION
+      --build-arg PYTHON_VERSION
+      --build-arg ALPINE_VERSION
+      .
+
+  after_script:
+    - export IMAGE_LATEST=$IMAGE_BASE:latest
+    - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
+    - export IMAGE_VERSION=$IMAGE_BASE:$PYTHON_VERSION-alpine$ALPINE_VERSION
+
+    - echo pushing tags!
+    - echo $IMAGE_LATEST
+    - echo $IMAGE_SHA
+    - echo $IMAGE_VERSION
+
+    - docker push $IMAGE_LATEST
+    - docker push $IMAGE_SHA
+    - docker push $IMAGE_VERSION
+
+    - echo All done!

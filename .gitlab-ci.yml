@@ -1,0 +1,3 @@
+include:
+  # yamllint disable-line
+  - local:  "cached-images/python/Build.gitlab-ci.yaml"
