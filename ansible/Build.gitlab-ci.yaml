@@ -1,4 +1,4 @@
-build-cached-python-dev:
+build-cached-ansible:
   image: docker:latest
   stage: build ansible
   only:
