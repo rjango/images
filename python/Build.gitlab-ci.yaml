@@ -1,4 +1,4 @@
-build-cached-python-dev:
+build-cached-python:
   image: docker:latest
   stage: build
   only:
