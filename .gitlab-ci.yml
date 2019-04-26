@@ -1,3 +1,4 @@
 include:
   # yamllint disable-line
   - local:  "python/Build.gitlab-ci.yaml"
+  - local:  "python-dev/Build.gitlab-ci.yaml"
