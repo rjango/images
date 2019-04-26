@@ -6,6 +6,7 @@ build-cached-python-dev:
   services:
     - docker:dind
   variables:
+    PARENT_IMAGE: $CI_REGISTRY/$CI_PROJECT_PATH/python
     IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH/python-dev
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
@@ -21,6 +22,7 @@ build-cached-python-dev:
     - echo $IMAGE_VERSION
 
     - docker pull python:$IMAGE_TAG_BASE && echo "success" || echo "doesn't exist yet"
+    - docker pull $PARENT_IMAGE && echo "success" || echo "doesn't exist yet"
     - docker pull $IMAGE_SHA && echo "success" || echo "doesn't exist yet"
     - docker pull $IMAGE_LATEST && echo "success" || echo "doesn't exist yet"
   script:
