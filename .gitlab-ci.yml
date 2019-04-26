@@ -1,10 +1,9 @@
 stages:
   - build
   - build dev
-#  - build ansible
+  - build ansible
 
 include:
-  # yamllint disable-line
   - local:  "python/Build.gitlab-ci.yaml"
   - local:  "python-dev/Build.gitlab-ci.yaml"
-#  - local:  "ansible/Build.gitlab-ci.yaml"
+  - local:  "ansible/Build.gitlab-ci.yaml"
