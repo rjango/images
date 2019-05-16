@@ -1,6 +1,6 @@
 build-cached-ansible:
   image: docker:latest
-  stage: build
+  stage: build ansible
   only:
     - schedules
   services:

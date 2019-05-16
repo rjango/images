@@ -1,6 +1,6 @@
 build-cached-python:
   image: docker:latest
-  stage: build
+  stage: build python
   only:
     - schedules
   services:
