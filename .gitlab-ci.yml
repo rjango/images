@@ -1,7 +1,7 @@
 stages:
   - build python
   - build python-dev
-  - build ansible
+  - build python-dev-post
 
 include:
   - local:  "python/Build.gitlab-ci.yaml"

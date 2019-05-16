@@ -1,6 +1,6 @@
 build-cached-ansible:
   image: docker:latest
-  stage: build ansible
+  stage: build python-dev-post
   only:
     - schedules
   services:
