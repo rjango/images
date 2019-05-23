@@ -3,8 +3,8 @@ build-pipenv:
   when: manual
   variables:
     DIR: "python-pipenv"
-    IMAGE_BASE: ${DOCKER_REGISTRY_ORG}/python:${PYTHON_VERSION}-alpine${VERSION}
-    IMAGE: ${DOCKER_REGISTRY_ORG}/${DIR}:2018.11.26-python${PYTHON_VERSION}-alpine${VERSION}
+    IMAGE_BASE: ${DOCKER_REGISTRY_ORG}/python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+    IMAGE: ${DOCKER_REGISTRY_ORG}/${DIR}:2018.11.26-python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
     PIPENV_VERSION: 2018.11.26
     # rjango/pipenv:2018.11.28-python3.7.3-alpine3.9
   before_script:
