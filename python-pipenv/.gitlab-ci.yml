@@ -23,6 +23,7 @@ build-pipenv:
       docker build
       --tag $IMAGE
       --build-arg IMAGE_BASE
+      --build-arg PIPENV_VERSION
       .
   after_script:
     - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
