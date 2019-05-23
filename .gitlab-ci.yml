@@ -12,6 +12,7 @@ stages:
   # Dep free means it doesn't require any images of ours
   - build-dep-free
   - build-dev
+  - build-post-dev
 
 include:
   - local:  "python/.gitlab-ci.yml"
