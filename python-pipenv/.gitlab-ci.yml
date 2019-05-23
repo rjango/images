@@ -3,11 +3,12 @@ build-python-pipenv:
   when: manual
   variables:
     IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH/python-pipenv
+    PIPENV_VERSION: 2018.11.26
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
     - cd python-pipenv
 
-    - export IMAGE_TAG_VERSIONED_BASE=$PYTHON_VERSION-alpine$ALPINE_VERSION
+    - export IMAGE_TAG_VERSIONED_BASE=$PYTHON_VERSION-alpine$ALPINE_VERSION-pipenv$PIPENV_VERSION
     - export IMAGE_VERSION=$IMAGE_BASE:$IMAGE_TAG_VERSIONED_BASE
     - export IMAGE_LATEST=$IMAGE_BASE:latest
     - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
@@ -20,6 +21,7 @@ build-python-pipenv:
       --tag $IMAGE_VERSION
       --build-arg PYTHON_VERSION
       --build-arg ALPINE_VERSION
+      --build-arg PIPENV_VERSION
       .
 
   after_script:
