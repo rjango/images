@@ -26,5 +26,4 @@ build-pipenv:
       --build-arg PIPENV_VERSION
       .
   after_script:
-    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
     - docker push $IMAGE
