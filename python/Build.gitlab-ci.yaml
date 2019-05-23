@@ -1,54 +1,46 @@
-build-cached-python:
-  image: docker:latest
-  stage: build python
-  only:
-    - schedules
-  services:
-    - docker:dind
+build-python:
+  stage: build-base
+#  only:
+#    - schedules
   variables:
-    IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH/python
-    # These are defined in the projects Gitlab CI schedules
-    # ALPINE_VERSION: 3.9
-    # PYTHON_VERSION: 3.7.3
+    DIR: "python"
+    IMAGE_BASE: ${DOCKER_IMAGE_BASE}:${ALPINE_VERSION}
+    GL_IMAGE: ${PUSH_REGISTERY}/${DIR}:${ALPINE_VERSION}
+    # gitlab.com/rjango/pub/images/helm:alpine3.9
+    IMAGE: ${DOCKER_REGISTRY_ORG}/${DIR}:${$DOCKER_IMAGE_BASE}${ALPINE_VERSION}
+    # rjango/helm:alpine3.9
   before_script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - cd python
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PW
+    - cd $DIR
 
-    - export IMAGE_TAG_VERSIONED_BASE=$PYTHON_VERSION-alpine$ALPINE_VERSION
-    - export IMAGE_VERSION=$IMAGE_BASE:$IMAGE_TAG_VERSIONED_BASE
-    - export IMAGE_LATEST=$IMAGE_BASE:latest
-    - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
+    - export IMAGE_BASE=alpine:${ALPINE_VERSION}
+    - export GL_IMAGE=${PUSH_REGISTERY}/${DIR}:${ALPINE_VERSION}
+    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
 
-    - echo The full image being build is $IMAGE_LATEST
-    - echo The python version is being build with python version and alpine $IMAGE_TAG_BASE.
-    - echo $IMAGE_VERSION
+    - echo The full image being built is
+    - echo $GL_IMAGE
 
-    - docker pull python:$IMAGE_TAG_BASE && echo "success" || echo "doesn't exist yet"
-    - docker pull $IMAGE_SHA && echo "success" || echo "doesn't exist yet"
-    - docker pull $IMAGE_LATEST && echo "success" || echo "doesn't exist yet"
+    - docker pull ${IMAGE_BASE} && echo "success" || echo "doesn't exist yet"
+    - docker pull ${IMAGE} && echo "success" || echo "doesn't exist yet"
   script:
-    - echo building tags latest and $IMAGE_SHA
+    - echo building tags latest and $IMAGE
     - >
       docker build
-      --tag $IMAGE_LATEST
-      --tag $IMAGE_SHA
-      --tag $IMAGE_VERSION
-      --build-arg PYTHON_VERSION
-      --build-arg ALPINE_VERSION
+      --tag $GL_IMAGE
+      --tag $IMAGE
+      --build-arg ${IMAGE}
       .
-
   after_script:
-    - export IMAGE_LATEST=$IMAGE_BASE:latest
-    - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
-    - export IMAGE_VERSION=$IMAGE_BASE:$PYTHON_VERSION-alpine$ALPINE_VERSION
+    - export IMAGE_BASE=${IMAGE_BASE}:${ALPINE_VERSION}
+    - export GL_IMAGE=${PUSH_REGISTERY}/${DIR}:${ALPINE_VERSION}
+    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
 
     - echo pushing tags!
-    - echo $IMAGE_LATEST
-    - echo $IMAGE_SHA
-    - echo $IMAGE_VERSION
+    - echo $IMAGE_BASE
+    - echo $IMAGE
 
-    - docker push $IMAGE_LATEST
-    - docker push $IMAGE_SHA
-    - docker push $IMAGE_VERSION
+    - docker push $GL_IMAGE
+    - docker push $IMAGE
 
     - echo All done!

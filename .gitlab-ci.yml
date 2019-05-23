@@ -1,7 +1,17 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  IMAGE_BASE: alpine
+  ALPINE_VERSION: "3.9"
+  PUSH_REGISTERY: registry.gitlab.com/jtco-io/pub/images
+
 stages:
-  - build python
-  - build python-dev
-  - build python-dev-post
+  # Base meaning anything we must build before we can run main build stage.
+  - build-base
+  - build
 
 include:
   - local:  "python/Build.gitlab-ci.yaml"
