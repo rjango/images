@@ -1,8 +1,7 @@
 build-cached-ansible:
   image: docker:latest
   stage: build
-  only:
-    - schedules
+  when: manual
   services:
     - docker:dind
   variables:

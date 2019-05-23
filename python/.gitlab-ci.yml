@@ -1,7 +1,6 @@
 build-python:
   stage: build-base
-#  only:
-#    - schedules
+  when: manual
   variables:
     DIR: "python"
     IMAGE_BASE: ${DOCKER_IMAGE_BASE}:${ALPINE_VERSION}
