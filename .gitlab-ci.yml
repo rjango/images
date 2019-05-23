@@ -6,7 +6,7 @@ services:
 variables:
   IMAGE_BASE: alpine
   ALPINE_VERSION: "3.9"
-  PUSH_REGISTERY: registry.gitlab.com/jtco-io/pub/images
+  PUSH_REGISTERY: registry.gitlab.com/rjango/images
 
 stages:
   # Base meaning anything we must build before we can run main build stage.
