@@ -10,9 +10,9 @@ variables:
 
 stages:
   # Dep free means it doesn't require any images of ours
-  - build-dep-free
-  - build-dev
-  - build-post-dev
+  - build-python
+  - build-python-post_build-pipenv
+  - build-python-post_build-pipenv-dev
 
 include:
   - local:  "python/.gitlab-ci.yml"
