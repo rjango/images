@@ -1,10 +1,9 @@
-ARG PYTHON_VERSION
-ARG ALPINE_VERSION
+ARG PYTHON_VERSION=3.7.3
+ARG ALPINE_VERSION=3.9
 
-FROM python:$PYTHON_VERSION-alpine$ALPINE_VERSIONE as rjango_python-base
+FROM python:$PYTHON_VERSION-alpine$ALPINE_VERSIONE
 ENV WORK_DIR=/app VENV_DIR=/venv PATH=$VENV_DIR/bin:$PATH
 RUN mkdir -p $WORK_DIR && \
-    python3 -m venv $VENV_DIR && \
-    pip install --upgrade --no-cache-dir pip pipenv
+    python3 -m venv $VENV_DIR
 
 WORKDIR $WORK_DIR
