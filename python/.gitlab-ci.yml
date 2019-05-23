@@ -1,5 +1,5 @@
 build-python:
-  stage: build-python
+  stage: build-initial
   when: manual
   variables:
     DIR: "python"
