@@ -21,3 +21,4 @@ include:
   - local:  "ansible/.gitlab-ci.yml"
   - local:  "python-pg-dev/.gitlab-ci.yml"
   - local:  "pipenv/.gitlab-ci.yml"
+  - local:  "pipenv-dev/.gitlab-ci.yml"
