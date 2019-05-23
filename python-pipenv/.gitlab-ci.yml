@@ -1,0 +1,34 @@
+build-python-pipenv:
+  stage: build-post-dev
+  when: manual
+  variables:
+    IMAGE_BASE: $CI_REGISTRY/$CI_PROJECT_PATH/python-pipenv
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - cd python-pipenv
+
+    - export IMAGE_TAG_VERSIONED_BASE=$PYTHON_VERSION-alpine$ALPINE_VERSION
+    - export IMAGE_VERSION=$IMAGE_BASE:$IMAGE_TAG_VERSIONED_BASE
+    - export IMAGE_LATEST=$IMAGE_BASE:latest
+    - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
+  script:
+    - echo building tags latest and $IMAGE_SHA
+    - >
+      docker build
+      --tag $IMAGE_LATEST
+      --tag $IMAGE_SHA
+      --tag $IMAGE_VERSION
+      --build-arg PYTHON_VERSION
+      --build-arg ALPINE_VERSION
+      .
+
+  after_script:
+    - export IMAGE_LATEST=$IMAGE_BASE:latest
+    - export IMAGE_SHA=$IMAGE_BASE:$CI_COMMIT_SHA
+    - export IMAGE_VERSION=$IMAGE_BASE:$PYTHON_VERSION-alpine$ALPINE_VERSION
+
+    - docker push $IMAGE_LATEST
+    - docker push $IMAGE_SHA
+    - docker push $IMAGE_VERSION
+
+    - echo All done!
