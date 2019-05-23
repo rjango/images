@@ -20,4 +20,4 @@ include:
   - local:  "python-dev/.gitlab-ci.yml"
   - local:  "ansible/.gitlab-ci.yml"
   - local:  "python-pg-dev/.gitlab-ci.yml"
-  - local:  "python-pipenv/.gitlab-ci.yml"
+  - local:  "pipenv/.gitlab-ci.yml"
