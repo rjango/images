@@ -11,7 +11,7 @@ variables:
 stages:
   # Dep free means it doesn't require any images of ours
   - build-initial
-  - build-python-post_build-pipenv
+  - build-python-post_build
   - build-python-post_build-pipenv-dev
 
 include:
