@@ -1,5 +1,5 @@
 build-python:
-  stage: build-dep-free
+  stage: build-python
   when: manual
   variables:
     DIR: "python"
