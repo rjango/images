@@ -15,7 +15,7 @@ stages:
 
 include:
   - local:  "python/Build.gitlab-ci.yaml"
-  - local:  "helm/.gitlab-ci.yaml"
+  - local:  "helm/.gitlab-ci.yml"
   - local:  "python-dev/Build.gitlab-ci.yaml"
   - local:  "ansible/Build.gitlab-ci.yaml"
   - local:  "python-pg-dev/Build.gitlab-ci.yaml"
