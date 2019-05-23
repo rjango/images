@@ -1,5 +1,5 @@
 build-helm:
-  stage: build-base
+  stage: build-dep-free
   when: manual
   variables:
     DIR: "helm"
