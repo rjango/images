@@ -1,6 +1,6 @@
 build-cached-python-pg-dev:
   image: docker:latest
-  stage: build-python-post_build-pipenv-dev
+  stage: build-python-post build-pipenv-dev
   when: manual
   services:
     - docker:dind

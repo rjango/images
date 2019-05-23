@@ -1,5 +1,5 @@
 build-pipenv-dev:
-  stage: build-python-post_build-pipenv-dev
+  stage: build-python-post build-pipenv-dev
   when: manual
   variables:
     DIR: "pipenv-dev"
