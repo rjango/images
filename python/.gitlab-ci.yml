@@ -15,7 +15,7 @@ build-python:
 
     - export IMAGE_BASE=alpine:${ALPINE_VERSION}
     - export GL_IMAGE=${PUSH_REGISTERY}/${DIR}:${ALPINE_VERSION}
-    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:{PYTHON_VERSION}-alpine${ALPINE_VERSION}
 
     - echo The full image being built is
     - echo $GL_IMAGE
