@@ -1,0 +1,30 @@
+build-pipenv-dev-pg:
+  stage: build-python-post build-pipenv-dev
+  when: manual
+  variables:
+    DIR: "pipenv-dev-pg"
+    PIPENV_VERSION: 2018.11.26
+    POSTGRESQL_DEV_VERSION: 11.3-r0
+    IMAGE_BASE: ${DOCKER_REGISTRY_ORG}/pipenv-dev:2018.11.26-python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+    IMAGE: ${DOCKER_REGISTRY_ORG}/${DIR}:2018.11.26-python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+    # rjango/pipenv-dev:2018.11.28-python3.7.3-alpine3.9
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PW
+    - cd $DIR
+
+    - echo The full image being built is
+    - echo $IMAGE
+
+    - docker pull ${IMAGE_BASE} && echo "success" || echo "doesn't exist yet"
+    - docker pull ${IMAGE} && echo "success" || echo "doesn't exist yet"
+  script:
+    - echo building tags latest and $IMAGE
+    - >
+      docker build
+      --tag $IMAGE
+      --build-arg IMAGE_BASE
+      --build-arg POSTGRESQL_DEV_VERSION
+      .
+  after_script:
+    - docker push $IMAGE

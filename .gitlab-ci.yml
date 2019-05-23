@@ -13,6 +13,7 @@ stages:
   - build-initial
   - build-python-post_build
   - build-python-post build-pipenv-dev
+  - build-python-post build-pipenv-dev-pg
 
 include:
   - local:  "python/.gitlab-ci.yml"
