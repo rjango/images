@@ -33,7 +33,7 @@ build-python:
   after_script:
     - export IMAGE_BASE=${IMAGE_BASE}:${ALPINE_VERSION}
     - export GL_IMAGE=${PUSH_REGISTERY}/${DIR}:${ALPINE_VERSION}
-    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:python${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+    - export IMAGE=${DOCKER_REGISTRY_ORG}/${DIR}:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
 
     - echo pushing tags!
     - echo $IMAGE_BASE
