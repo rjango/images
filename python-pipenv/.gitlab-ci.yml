@@ -2,7 +2,7 @@ build-pipenv:
   stage: build-post-dev
   when: manual
   variables:
-    DIR: "pipenv"
+    DIR: "python-pipenv"
     IMAGE_BASE: ${DOCKER_REGISTRY_ORG}/python:${PYTHON_VERSION}-alpine${VERSION}
     IMAGE: ${DOCKER_REGISTRY_ORG}/${DIR}:2018.11.26-python${PYTHON_VERSION}-alpine${VERSION}
     PIPENV_VERSION: 2018.11.26
